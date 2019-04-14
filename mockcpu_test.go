@@ -174,32 +174,32 @@ func TestMocks(t *testing.T) {
 		t.Log("Opening", f.FileInfo().Name())
 		restore := mockCPU(content)
 		Detect()
-		t.Log("Name:", CPU.BrandName)
+		t.Log("Name:", X86.BrandName)
 		n := maxFunctionID()
 		t.Logf("Max Function:0x%x\n", n)
 		n = maxExtendedFunction()
 		t.Logf("Max Extended Function:0x%x\n", n)
-		t.Log("PhysicalCores:", CPU.PhysicalCores)
-		t.Log("ThreadsPerCore:", CPU.ThreadsPerCore)
-		t.Log("LogicalCores:", CPU.LogicalCores)
-		t.Log("Family", CPU.Family, "Model:", CPU.Model)
-		t.Log("Features:", CPU.Features)
-		t.Log("Cacheline bytes:", CPU.CacheLine)
-		t.Log("L1 Instruction Cache:", CPU.Cache.L1I, "bytes")
-		t.Log("L1 Data Cache:", CPU.Cache.L1D, "bytes")
-		t.Log("L2 Cache:", CPU.Cache.L2, "bytes")
-		t.Log("L3 Cache:", CPU.Cache.L3, "bytes")
-		if CPU.LogicalCores > 0 && CPU.PhysicalCores > 0 {
-			if CPU.LogicalCores != CPU.PhysicalCores*CPU.ThreadsPerCore {
+		t.Log("PhysicalCores:", X86.PhysicalCores)
+		t.Log("ThreadsPerCore:", X86.ThreadsPerCore)
+		t.Log("LogicalCores:", X86.LogicalCores)
+		t.Log("Family", X86.Family, "Model:", X86.Model)
+		t.Log("Features:", X86.Features)
+		t.Log("Cacheline bytes:", X86.CacheLine)
+		t.Log("L1 Instruction Cache:", X86.Cache.L1I, "bytes")
+		t.Log("L1 Data Cache:", X86.Cache.L1D, "bytes")
+		t.Log("L2 Cache:", X86.Cache.L2, "bytes")
+		t.Log("L3 Cache:", X86.Cache.L3, "bytes")
+		if X86.LogicalCores > 0 && X86.PhysicalCores > 0 {
+			if X86.LogicalCores != X86.PhysicalCores*X86.ThreadsPerCore {
 				t.Fatalf("Core count mismatch, LogicalCores (%d) != PhysicalCores (%d) * CPU.ThreadsPerCore (%d)",
-					CPU.LogicalCores, CPU.PhysicalCores, CPU.ThreadsPerCore)
+					X86.LogicalCores, X86.PhysicalCores, X86.ThreadsPerCore)
 			}
 		}
 
-		if CPU.ThreadsPerCore > 1 && !CPU.HTT() {
+		if X86.ThreadsPerCore > 1 && !X86.HTT() {
 			t.Fatalf("Hyperthreading not detected")
 		}
-		if CPU.ThreadsPerCore == 1 && CPU.HTT() {
+		if X86.ThreadsPerCore == 1 && X86.HTT() {
 			t.Fatalf("Hyperthreading detected, but only 1 Thread per core")
 		}
 		restore()

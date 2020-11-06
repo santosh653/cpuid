@@ -15,6 +15,11 @@ go:
   - 1.14.x
   - 1.15.x
   - master
+jobs:
+ exclude:
+  - go: master
+    arch: amd64
+    os: windows
 
 script:
   - go vet ./...
